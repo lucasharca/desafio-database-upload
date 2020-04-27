@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
@@ -71,7 +73,15 @@ transactionsRouter.post(
     const transactionFile = await importTransactionService.execute(
       request.file.filename,
     );
-    await transactionFile.map(file => createTransactionService.execute(file));
+
+    for (const element of transactionFile) {
+      await createTransactionService.execute({
+        title: element.title,
+        value: element.value,
+        type: element.type,
+        category: element.category,
+      });
+    }
 
     return response.status(200).json(request.file.filename);
   },

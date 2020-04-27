@@ -54,7 +54,7 @@ export default class CreateTransactions1587570763964
       new TableForeignKey({
         name: 'transactionsCategory',
         columnNames: ['category_id'],
-        referencedTableName: 'category',
+        referencedTableName: 'categories',
         referencedColumnNames: ['id'],
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
